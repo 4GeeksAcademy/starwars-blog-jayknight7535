@@ -28,12 +28,12 @@ export const router = createBrowserRouter(
         <Route path= "/" element={<Home />} />
         <Route path="/single/:theId" element={ <Single />} />  {/* Dynamic route for single items */}
         <Route path="/demo" element={<Demo />} />
-        <Route path="/people" element={<PeoplePage />} />
-        <Route path="/people/:uid" element={<PeoplePage />} />
+        
+        <Route path="/people/:id/" element={<PeoplePage />} />
         <Route path="/planet" element={<PlanetPage />} />
-        <Route path="/planet/:uid" element={<PlanetPage />} />
+        <Route path="/planet/:id/" element={<PlanetPage />} />
         <Route path="/species" element={<SpeciesPage />} />
-        <Route path="/species/:uid" element={<SpeciesPage />} />
+        <Route path="/species/:id" element={<SpeciesPage />} />
       </Route> 
     )
 );

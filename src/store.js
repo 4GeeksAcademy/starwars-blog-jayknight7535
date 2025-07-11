@@ -1,6 +1,8 @@
 export const initialStore=()=>{
   return{
-    message: null,
+    people: [jsonify(fetch("https://www.swapi.tech/api/people/"))],
+    planet: [jsonify("https://www.swapi.tech/api/planet/")],
+    species: [jsonify("https://www.swapi.tech/api/species/")],
   }
 }
 

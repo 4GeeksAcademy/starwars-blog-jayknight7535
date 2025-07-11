@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { favorites } from "./favorites";
 
 export const Navbar = () => {
 
@@ -11,9 +12,18 @@ export const Navbar = () => {
     					favorites
   					</button>
   						<ul class="dropdown-menu">
-    						<li><a class="dropdown-item" href="#">Action</a></li>
-    						<li><a class="dropdown-item" href="#">Another action</a></li>
-    						<li><a class="dropdown-item" href="#">Something else here</a></li>
+    					<li>	{people.map((people) => (
+            <div className="mb-3" key={people.id}>
+              <Link to={`/people/${people.id}`}>
+                <h1>{people.name}</h1>
+              </Link>
+            <button type="button" class="btn btn" onClick={removeFavorite}>
+                <i class="fa-solid fa-trash-can"></i>
+            </button>
+			</div>
+			 ))}
+            </li>
+    						
  						</ul>
 				</div>
 					

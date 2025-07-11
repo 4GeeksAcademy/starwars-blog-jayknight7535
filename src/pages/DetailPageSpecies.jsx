@@ -6,11 +6,11 @@ export const SpeciesPage = ((url,name) =>{
    const {store, dispatch} =useGlobalReducer()
    const { book_id } = useParams();
    const nav = useNavigate();
-   const [species, setspeicies]=useState([])
+   const [species, setspecies]=useState([])
    const loadData = async ()=> {
-       const resp= await fetch(https://www.swapi.tech/api/speicies/<uid>/);
+       const resp= await fetch('https://www.swapi.tech/api/speicies/${uid}>/');
        const data= await resp.json();
-       setspeicies = data.species
+       setspecies = data.species
    }
    useEffect = (()=> {
        loadData()
@@ -24,43 +24,43 @@ export const SpeciesPage = ((url,name) =>{
    <div className="row">
     <div className="col">
         <h5>classification</h5>
-        <p>speicies.classification</p>
+    <p>{species.classification}</p>
     </div>
     <div className="col">
         <h5>designation</h5>
-        <p>species.designation</p>
+        <p>{species.designation}</p>
     </div>
     <div className="col">
         <h5>eye_colors</h5>
-        <p>speicies.eye_color</p>
+        <p>{species.eye_color}</p>
     </div>
     <div className="col">
         <h5>people</h5>
-        <p>speicies.people</p>
+        <p>{jsonify(fetch(species.people))}</p>
     </div>
     <div className="col">
         <h5>skin_colors</h5>
-        <p>speicies.skin_color</p>
+        <p>{species.skin_color}</p>
     </div>
     <div className="col">
         <h5>language</h5>
-        <p>speicies.language</p>
+        <p>{species.language}</p>
     </div>
     <div className="col">
         <h5>hair_colors</h5>
-        <p>speicies.hair_color</p>
+        <p>{species.hair_color}</p>
     </div>
     <div className="col">
         <h5>homeworld</h5>
-        <p>speicies.homeworld</p>
+        <p>{jsonify(fetch(species.people))}</p>
     </div>
     <div className="col">
         <h5>average_lifespan</h5>
-        <p>speicies.average_lifespan</p>
+        <p>{species.average_lifespan}</p>
     </div>
     <div className="col">
         <h5>average_height</h5>
-        <p>speicies.average_height</p>
+        <p>{species.average_height}</p>
     </div>
    </div>
     <Link to="/">

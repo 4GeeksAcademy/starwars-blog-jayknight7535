@@ -3,6 +3,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import {PeopleCard} from "../components/PeopleCard";
 import {PlanetCard} from "../components/PlanetCard";
 import {SpeciesCard} from "../components/SpeciesCard";
+import {PeoplePage} from "../pages/DetailPagePeople";
 
 export const Home = () => {
 
