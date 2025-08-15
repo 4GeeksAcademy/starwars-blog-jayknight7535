@@ -1,25 +1,28 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { useState, useEffect } from "react";
 
 export const PlanetPage = (() =>{
   const {store, dispatch} =useGlobalReducer()
-  const { book_id } = useParams();
-  const nav = useNavigate();
-  const [planet, setplanet] = useState([])
+  const [planet, setPlanet] = useState({})
+  const {uid}=useParams()
+  const [people, setpeople] = useState({})
+  const [species, setspecies] = useState({})
+  
   const loadData = async ()=> {
-      const resp= await fetch('https://www.swapi.tech/api/planet/${uid}/');
+      const resp= await fetch(`https://www.swapi.tech/api/planets/${uid}`);
       const data= await resp.json();
-      setperson = data.planet
+      setPlanet(data.result.properties)  
   }
-  useEffect = (()=> {
+  useEffect(()=> {
       loadData()
-  },[])
+  },[]); 
+  
     return(
  <div>
      <div>
      <img src="" class="img-fluid rounded-start" alt="..."/>
-     <h5>planet.name</h5>
+     <h5>{planet.name}</h5>
     </div> 
     <div className="row">
      <div className="col">
@@ -48,7 +51,7 @@ export const PlanetPage = (() =>{
      </div>
      <div className="col">
       <h5>orbital_period</h5>
-      <p>{planet.orbital_petiod}</p>
+      <p>{planet.orbital_period}</p>
      </div>
      <div className="col">
       <h5>population</h5>

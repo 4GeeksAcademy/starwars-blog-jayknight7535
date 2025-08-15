@@ -5,52 +5,65 @@ import { useEffect, useState, useNavigate } from "react";
 
 export const PeoplePage =  (() =>{
    const {store, dispatch} =useGlobalReducer();
-   
+   const {uid}=useParams()
+   cosnt [person, setPerson] = useState({})
+   const [loading, setLoading] = useState(true);
+   const [homeworld, sethomeworld] = useState("")
 
-    const resp= fetch('https://www.swapi.tech/api/people/1/');
-    const data =  resp.json();
-    const people = Promise.all(data.results.map(people => fetch(people.url)))
-           .then(resps => {
-               return Promise.all(resps.map(resp => resp.json())) 
-           })    
+   const loadPerson = async () =>  {
+    const resp= await fetch(`https://www.swapi.tech/api/people/${uid}`);
+    const  data = await resp.json();
+    setPerson(data.result.properties);}
+    
+    const loadPlanet = async () => {
+        const resps = await fetch(person.homeworld)
+        const datas = await resps.json()
+        sethomeworld(datas.result.properties)
+    }
+
+    useEffect(()=>{
+        loadPerson()
+        loadPlanet
+    }, [])
+
     return (
  <div>
     <div>
      <img src="..." class="img-fluid rounded-start" alt="..."/>
-     <h1>{people.name}</h1>
+     <h1>{person.name}</h1>
     </div> 
   <div className="row">
     <div className="col">
         <h5>gender</h5>
-        <p>{people.gender}</p>
+        <p>{person.gender}</p>
     </div>
     <div className="col">
         <h5>skin color</h5>
-        <p>{people.skin_color}</p>
+        <p>{person.skin_color}</p>
     </div>
     <div className="col">
         <h5>hair color</h5>
-        <p>{people.hair_color}</p>
+        <p>{person.hair_color}</p>
     </div>
     <div className="col">
         <h5>height</h5>
-        <p>{people.height}</p>
+        <p>{person.height}</p>
     </div>
     <div className="col">
         <h5>eye color</h5>
-        <p>{people.eye_color}</p>
+        <p>{person.eye_color}</p>
     </div>
     <div className="col">
         <h5>mass</h5>
-        <p>{people.mass}</p>
+        <p>{person.mass}</p>
     </div>
     <div className="col">
         <h5>homeworld</h5>
-        <p>{jsonify(fetch(people.planet))}</p>
+        <p>{homeworld}</p>
     </div>
     <div className="col">
         <h5>birth year</h5>
-        <p>{pople.birth_year}</p>
+        <p>{person.birth_year}</p>
     </div>
    </div>
     <Link to="/">
