@@ -1,21 +1,27 @@
-import { Link,useParams } from "react-router-dom";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
-import { favorites} from "./favorites.jsx";
+import { Link } from "react-router-dom";
+import { useFavorites } from "../context/FavoritesContext";
 
-export const PeopleCard =({url= "https://th.bing.com/th/id/OIP.BwkJcokhVn6mctcr1znVlQAAAA?rs=1&pid=ImgDetMain"}) => {
-  const {store, dispatch} =useGlobalReducer()
+export const PeopleCard = ({ person, url }) => {
+  const { addFavorite } = useFavorites();
+
+  if (!person) return null; // Safe fallback
+
   return (
-    <div class="card" style={{width: "200px", height:"350px"}}>
-      <img src={url} class="card-img-top" alt="..." />
-      <div class="card-body">
-        <h5 class="card-title">{store.people.uid.name}</h5>
-        <Link to="/people/{store.people.uid}/">
-          <a href="#" class="btn btn-primary">
-            learn more
-          </a>
+    <div className="card" style={{ width: "200px", height: "350px" }}>
+      <img src={url} className="card-img-top" alt={person.name} />
+      <div className="card-body">
+        <h5 className="card-title">{person.name}</h5>
+
+        <Link to={`/people/${person.uid}`}>
+          <button className="btn btn-primary">Learn more</button>
         </Link>
-         <button type="button" class="btn btn" onClick={addFavorite}>
-          <i class="fa-solid fa-star"></i>
+
+        <button
+          type="button"
+          className="btn btn"
+          onClick={() => addFavorite(person)}
+        >
+          <i className="fa-solid fa-star"></i>
         </button>
       </div>
     </div>
