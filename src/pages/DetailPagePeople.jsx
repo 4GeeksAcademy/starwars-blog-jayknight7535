@@ -1,75 +1,76 @@
-import { Link, useParams } from "react-router-dom";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import { Link, useParams, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export const PeoplePage = () => {
   const { uid } = useParams();
-  const { store, dispatch } = useGlobalReducer();
-  
-  const [person, setPerson] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [homeworld, setHomeworld] = useState("");
+  const location = useLocation();
 
-  // Load person details
+  const [person, setPerson] = useState(null);
+  const [homeworld, setHomeworld] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  // ✅ Set image URL (use passed `url` or fallback to SW Visual Guide)
+  const imageUrl =
+    location.state?.url ||
+    `https://starwars-visualguide.com/assets/img/characters/${uid}.jpg`;
+
+  console.log("Image URL:", imageUrl); // ✅ Correct placement
+
+  // ✅ Load person and homeworld
   const loadPerson = async () => {
     try {
       const resp = await fetch(`https://www.swapi.tech/api/people/${uid}`);
       const data = await resp.json();
       setPerson(data.result.properties);
-    } catch (err) {
-      console.error("Failed to load person:", err);
-    }
-  };
 
-  // Load homeworld from person.homeworld URL
-  const loadPlanet = async (homeworldUrl) => {
-    try {
-      const res = await fetch(homeworldUrl);
-      const data = await res.json();
-      setHomeworld(data.result.properties.name);
+      const hwResp = await fetch(data.result.properties.homeworld);
+      const hwData = await hwResp.json();
+      setHomeworld(hwData.result.properties.name);
+
+      setLoading(false);
     } catch (err) {
-      console.error("Failed to load homeworld:", err);
+      console.error("Error loading person:", err);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    const fetchAll = async () => {
-      await loadPerson();
-    };
-
-    fetchAll();
+    loadPerson();
   }, [uid]);
 
-  // When person.homeworld is available, load planet
-  useEffect(() => {
-    if (person.homeworld) {
-      loadPlanet(person.homeworld);
-    }
-  }, [person.homeworld]);
+  if (loading || !person) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div>
-      <div className="text-center">
+    <div className="container mt-4">
+      <div className="d-flex justify-content-center align-items-center">
         <img
-          src={`https://starwars-visualguide.com/assets/img/characters/${uid}.jpg`}
-          className="img-fluid rounded"
+          src={imageUrl}
           alt={person.name}
-        />
-        <h1 className="mt-3">{person.name}</h1>
+          className="img-fluid"
+          style={{ maxWidth: "300px", display: "block", }}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src =
+             "https://via.placeholder.com/300x400.png?text=Image+Not+Found";
+        }}/>
+
+        <h1>{person.name}</h1>
       </div>
 
-      <div className="row mt-4">
-        <div className="col"><h5>Gender</h5><p>{person.gender}</p></div>
-        <div className="col"><h5>Skin Color</h5><p>{person.skin_color}</p></div>
-        <div className="col"><h5>Hair Color</h5><p>{person.hair_color}</p></div>
-        <div className="col"><h5>Height</h5><p>{person.height}</p></div>
-        <div className="col"><h5>Eye Color</h5><p>{person.eye_color}</p></div>
-        <div className="col"><h5>Mass</h5><p>{person.mass}</p></div>
-        <div className="col"><h5>Homeworld</h5><p>{homeworld}</p></div>
-        <div className="col"><h5>Birth Year</h5><p>{person.birth_year}</p></div>
+      <div className="row mt-4 text-center">
+        <div className="col"><strong>Gender:</strong> {person.gender}</div>
+        <div className="col"><strong>Skin Color:</strong> {person.skin_color}</div>
+        <div className="col"><strong>Hair Color:</strong> {person.hair_color}</div>
+        <div className="col"><strong>Height:</strong> {person.height}</div>
+        <div className="col"><strong>Eye Color:</strong> {person.eye_color}</div>
+        <div className="col"><strong>Mass:</strong> {person.mass}</div>
+        <div className="col"><strong>Homeworld:</strong> {homeworld}</div>
+        <div className="col"><strong>Birth Year:</strong> {person.birth_year}</div>
       </div>
 
-      <div className="mt-4">
+      <div className="mt-4 text-center">
         <Link to="/">
           <button className="btn btn-primary">Back Home</button>
         </Link>
@@ -77,3 +78,5 @@ export const PeoplePage = () => {
     </div>
   );
 };
+
+

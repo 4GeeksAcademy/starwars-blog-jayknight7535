@@ -13,7 +13,7 @@ export const Home = () => {
 	 <div className="container">
 		<div className= "row" style={{marginTop:"50px"}}>
 			<h1>People</h1>
-			<PeopleCard person={{uid: "1",name: "Luke Skywalker"}} url="https://c8.alamy.com/comp/2B8W8DA/star-wars-1977-lucasfilm20th-century-fox-film-with-mark-hamill-as-luke-skywalker-2B8W8DA.jpg"/>
+			<PeopleCard person={{uid: "1", name: "Luke Skywalker"}} url="https://c8.alamy.com/comp/2B8W8DA/star-wars-1977-lucasfilm20th-century-fox-film-with-mark-hamill-as-luke-skywalker-2B8W8DA.jpg"/>
 			<PeopleCard person={{uid: "2", name: "C-3PO"}} url="https://www.pngall.com/wp-content/uploads/9/Star-Wars-C-3PO-Vector-PNG-Image-300x225.png"/>
 			<PeopleCard person={{uid: "3", name : "R2-D2"}} url="https://images.voicy.network/Content/Pages/Images/70c73c68-180a-4c52-b63c-339997024838-small.png?auto=compress&auto=format&h=186&lossless=true"/>
 			<PeopleCard person={{uid: "4",name : "Darth Vader"}} url="https://th.bing.com/th/id/OIP.R4UogUbrM10wm6JJ6ABhswAAAA?rs=1&pid=ImgDetMain"/>

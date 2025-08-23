@@ -12,9 +12,11 @@ export const PeopleCard = ({ person, url }) => {
       <div className="card-body">
         <h5 className="card-title">{person.name}</h5>
 
-        <Link to={`/people/${person.uid}`}>
-          <button className="btn btn-primary">Learn more</button>
-        </Link>
+      <Link 
+        to={`/people/${person.uid}`}
+        state={{ url }}>
+        <button className="btn btn-primary">Learn more</button>
+      </Link>
 
         <button
           type="button"

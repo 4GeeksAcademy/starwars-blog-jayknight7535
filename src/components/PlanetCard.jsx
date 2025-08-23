@@ -12,7 +12,8 @@ export const PlanetCard = ({ planet, url }) => {
       <div className="card-body">
         <h5 className="card-title">{planet.name}</h5>
 
-        <Link to={`/planet/${planet.uid}`}>
+        <Link to={`/planet/${planet.uid}`}
+        state={{ url }}>
           <button className="btn btn-primary">Learn more</button>
         </Link>
 
